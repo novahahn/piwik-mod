@@ -260,6 +260,15 @@ class Piwik_Tracker_Visit implements Piwik_Tracker_Visit_Interface
 		Piwik_PostEvent('Tracker.knownVisitorInformation', $this->visitorInfo);
 	}
 
+	// Replace last segment with zero
+	protected function anonymIp($ip)
+	{
+	 $encryptIp = long2ip($ip); //make real ip of type long
+	 $ipArray = explode(".", $encryptIp); //make array, explode segments
+	 $anonymIp = sprintf("%u", ip2long($ipArray[0].".".$ipArray[1].".".$ipArray[2].".0")); //Make new IP with 4 Segments. Last Segment is zero. Rechange type into long and make unsigned 
+	 return $anonymIp; 
+	}
+
 	/**
 	 * In the case of a new visit, we have to do the following actions:
 	 *
@@ -321,7 +330,7 @@ class Piwik_Tracker_Visit implements Piwik_Tracker_Visit_Interface
 			'config_gears'	 		=> $userInfo['config_gears'],
 			'config_silverlight'	=> $userInfo['config_silverlight'],
 			'config_cookie' 		=> $userInfo['config_cookie'],
-			'location_ip' 			=> $userInfo['location_ip'],
+			'location_ip' 			=> $this->anonymIp($userInfo$userInfo['location_ip'],)
 			'location_browser_lang' => $userInfo['location_browser_lang'],
 			'location_country' 		=> $country,
 		);
