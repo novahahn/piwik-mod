@@ -265,7 +265,7 @@ class Piwik_Tracker_Visit implements Piwik_Tracker_Visit_Interface
 	{
 	 $encryptIp = long2ip($ip); //make real ip of type long
 	 $ipArray = explode(".", $encryptIp); //make array, explode segments
-	 $anonymIp = sprintf("%u", ip2long($ipArray[0].".".$ipArray[1].".".$ipArray[2].".0")); //Make new IP with 4 Segments. Last Segment is zero. Rechange type into long and make unsigned 
+	 $anonymIp = sprintf("%u", ip2long($ipArray[0].".".$ipArray[1].".".$ipArray[2].".1")); //Make new IP with 4 Segments. Last Segment is zero. Rechange type into long and make unsigned 
 	 return $anonymIp; 
 	}
 
